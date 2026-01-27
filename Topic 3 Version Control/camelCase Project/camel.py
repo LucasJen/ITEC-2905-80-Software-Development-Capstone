@@ -22,6 +22,5 @@ def banner():
     stars = '*' * len(message)
     print(f'\n{stars} \n{message} \n{stars}\n')
 
-
 if __name__ == '__main__':
     main()
