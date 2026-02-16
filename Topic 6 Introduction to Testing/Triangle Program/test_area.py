@@ -25,6 +25,5 @@ class TestShapeAreas(TestCase):
         self.assertEqual(0, area.triange_area(0, 0))
         self.assertEqual(0, area.triange_area(3, 0))
         
-
 if __name__ == "__main__":
     unittest.main()
