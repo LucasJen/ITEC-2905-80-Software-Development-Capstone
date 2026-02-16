@@ -1,0 +1,8 @@
+What areas are you interested in? What projects could you work on to build skills? Can you find resources for tutorials? 
+lucas: ansible and enterprise automation. Ideally on Linux systems
+Resources: Redhat Docs, Claude, Jeff Geerling on Youtube for Ansible
+
+For example, you are interested in a job as a Java developer, what specific technologies are relevant to Java? 
+I am looking for work in enterprise infrastructure, specifically with Redhat. 
+
+Looking at job listings may be helpful. Do you see any other skills listed? 
