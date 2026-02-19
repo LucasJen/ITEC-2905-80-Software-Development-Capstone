@@ -22,7 +22,7 @@ def get_forecast(weather_data, city):
         print(f'\n5-Day Forecast for {city}:')
         # for loop will loop through keys associated with the 'list' object within the JSON data and create variables assigned to relevant keys within
         for entry in weather_data['list']:
-            timestamp = datetime.fromtimestamp(entry['dt']).strftime('%Y-%m-%d %H:%M')
+            timestamp = datetime.fromtimestamp(entry['dt']).strftime('%Y-%m-%d %H:%M') # pulls current time and formats to year-mont-day hour:minute
             temp = entry['main']['temp']
             description = entry['weather'][0]['description']
             wind = entry['wind']['speed']
