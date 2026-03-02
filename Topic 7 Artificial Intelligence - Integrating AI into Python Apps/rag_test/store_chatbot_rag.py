@@ -5,9 +5,12 @@ import rich
 from rich.markdown import Markdown
 import sys
 import os
-import chromadb
+import chromadb #Chromadb incompatible with Python 3.14
 from chromadb import Documents, EmbeddingFunction, Embeddings
 import pandas
+
+
+client = genai.Client()
 
 
 class GeminiEmbeddingFunction(EmbeddingFunction):
@@ -22,7 +25,7 @@ class GeminiEmbeddingFunction(EmbeddingFunction):
         response = client.models.embed_content(
             model='models/text-embedding-004',
             contents=input,
-            config=types.EmbeddingContentConfig(
+            config=types.EmbedContentConfig(
                 task_type=embedding_task
             )
         )
@@ -35,6 +38,7 @@ embed_function.document_mode = True
 chroma_client = chromadb.PersistentClient()
 db = chroma_client.get_or_create_collection(name='zoomies_clothes', embedding_function=embed_function)
 
+# open csv file assign values under each heading to list.
 with open('fitness_clothing_descriptions', 'r') as file:
     clothing_data = pandas.read_csv(file)
     ids = list(clothing_data.style_code)
@@ -48,11 +52,10 @@ db.upsert(
 embed_function.document_mode = False # querying the database - find relevant documents
 
 query = 'What are the best pants?'
-result = db.query(query_texts=[query], n_results=5) # how many results to return?
-[all_items] = result['documents']
-print(all_items)
+# result = db.query(query_texts=[query], n_results=5) # how many results to return?
+# [all_items] = result['documents']
+# print(all_items)
 
-client = genai.Client()
 chat = client.chats.create(model='gemini-2.5-flash')
 
 try:
@@ -64,6 +67,27 @@ except:
 
 while True:
     question = input('> ')
+
+    # perform a RAG serach to find most relevant documents
+
+    result = db.query(query_texts=[question], n_results=5) # how many results to return?
+    [all_items] = result['documents']
+    print(all_items)
+
+    prompt = f"""The user has the following question
+    
+    USER QUESTION: {question}
+
+    Here is information from the produce database that may help the user .
+    
+    """
+
+    for item in all_items:
+        item_one_line = item.replace('\n', ' ')
+        prompt_with_rag += f'PRODUCT : {item_one_line}\n'
+
+    print(prompt_with_rag)
+        
     response = chat.send_message(
         # model='gemini-2.5-flash',
         question,
