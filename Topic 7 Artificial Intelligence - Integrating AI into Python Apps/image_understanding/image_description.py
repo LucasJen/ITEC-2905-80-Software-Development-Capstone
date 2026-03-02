@@ -1,17 +1,34 @@
 from google import genai
 from google.genai import types
+from google.genai.types import GenerateContentConfig
+from pydantic import BaseModel
 
 client = genai.Client()
 
-with open('C:\\Users\\MistrasFHR-PB2\\Desktop\\Coding\\ITEC-2905-80-Software-Development-Capstone\\Topic 7 Artificial Intelligence - Integrating AI into Python Apps\\image_understanding\\tariffs.png', 'rb') as f:
+class Produce(BaseModel):
+    name: str
+    color: str
+    fruit_or_veg: str
+
+with open('hilux.jpeg', 'rb') as f:
     image_bytes = f.read()
 
 response = client.models.generate_content(
     model='gemini-2.5-flash',
     contents=[
         types.Part.from_bytes(data=image_bytes, mime_type='image/png'),
-        'Make a political joke about this image?'
-    ]
+        'what trucks is this a picture of?'
+    ],
+    config=GenerateContentConfig(
+        system_instruction="""
+            pretend these trucks are actually in the produce isle, tell me which one's look more like a fruit and other a vegetable.
+        """,
+        response_mime_type='application/json',
+        response_schema=list[Produce]
+    )
 )
 
-print(response.text)
+print(response.parsed)
+
+for produce_item in response.parsed:
+    print(produce_item.name)
