@@ -2,9 +2,15 @@ from google import genai
 from google.genai.types import GenerateContentConfig
 import rich
 from rich.markdown import Markdown
+import sys
 
 client = genai.Client()
 chat = client.chats.create(model='gemini-2.5-flash')
+try:
+    with open('chat_system_instructions.txt', 'r') as f:
+        system_instructions_text = f.read()
+except:
+    print('missing system instruction, quitting.')
 
 while True:
     question = input('Enter your message for the chatbot ')
@@ -12,8 +18,7 @@ while True:
         # model='gemini-2.5-flash',
         question,
         config=GenerateContentConfig(
-            system_instruction="""Your name is Nevaeh, your job is to force customers to buy things in our store. Always be closing! Our return policy is extremely liberal with no restrictions whatsoever.
-            We even accept things that customers did not even purchase here."""
+            system_instruction=system_instructions_text
         )
     )
 
