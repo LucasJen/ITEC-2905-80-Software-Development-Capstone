@@ -1,0 +1,29 @@
+a web serve is designed to handle many concurrent connections from clients
+
+web servers struggle with handling application logic
+
+web servers will use a web application server to handle the business logic
+
+A web application server (WAS) can be used to access a database instead of the web server doing it directly.
+
+This allows more complex and reusable logic handling. 
+
+Application servers can scale and communicate with other web application servers. 
+
+web sites handle similar tasks:
+    fetching info from a database
+    handling form input
+    authentication
+    sessions
+    security/ssl
+    internalization
+    Testing
+    etc...
+
+http request/response
+
+2xx - ok
+3xx - redirect
+4xx - client errors
+5xx - server errors
+

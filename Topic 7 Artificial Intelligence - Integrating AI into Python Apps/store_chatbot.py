@@ -6,6 +6,7 @@ import sys
 
 client = genai.Client()
 chat = client.chats.create(model='gemini-2.5-flash')
+
 try:
     with open('chat_system_instructions.txt', 'r') as f:
         system_instructions_text = f.read()
