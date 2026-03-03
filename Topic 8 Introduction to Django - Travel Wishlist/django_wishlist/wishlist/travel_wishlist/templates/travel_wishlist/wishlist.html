@@ -6,10 +6,16 @@
     <button type="submit">Add</button>
 </form>
 
-{% for place in places %}
+{% for place in places %} 
 
 <div>
     {{ place.name }}
+
+    <form method="POST" action="{% url 'place_was_visited' place.pk%}">
+        {% csrf_token %}
+        <button>Visited!</button>
+    </form>
+    
 </div>
 
 {% empty %}
