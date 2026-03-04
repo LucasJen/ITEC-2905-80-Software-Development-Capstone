@@ -14,7 +14,7 @@ except:
     print('missing system instruction, quitting.')
 
 while True:
-    question = input('Enter your message for the chatbot ')
+    question = input('Enter your message for the chatbot: ')
     response = chat.send_message(
         # model='gemini-2.5-flash',
         question,
